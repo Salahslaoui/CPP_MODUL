@@ -21,7 +21,7 @@ class RobotomyRequestForm : public AForm
                 const char *what() const throw();
                 ~Signed() throw();
         };
-        RobotomyRequestForm operator=(const RobotomyRequestForm &op);
+        RobotomyRequestForm &operator=(const RobotomyRequestForm &op);
         ~RobotomyRequestForm();
 };
 

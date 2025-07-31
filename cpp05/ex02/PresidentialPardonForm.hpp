@@ -12,7 +12,7 @@ public:
     PresidentialPardonForm(std::string str);
     PresidentialPardonForm(const PresidentialPardonForm &copy);
     void execute(Bureaucrat const & executor) const;
-    PresidentialPardonForm operator=(const PresidentialPardonForm &op);
+    PresidentialPardonForm &operator=(const PresidentialPardonForm &op);
     class Signed : std::exception
     {
         private:

@@ -43,7 +43,7 @@ std::ostream &operator<<(std::ostream &os, AForm &F)
     return os;
 }
 
-std::string AForm::getName()
+std::string AForm::getName() const
 {
     return name;
 }

@@ -12,7 +12,7 @@ class RobotomyRequestForm : public AForm
         RobotomyRequestForm(std::string str);
         RobotomyRequestForm(const RobotomyRequestForm &copy);
         void execute(Bureaucrat const & executor) const;
-        class Signed : std::exception
+        class Signed : public std::exception
         {
             private:
                 std::string val;

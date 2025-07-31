@@ -13,7 +13,7 @@ public:
     PresidentialPardonForm(const PresidentialPardonForm &copy);
     void execute(Bureaucrat const & executor) const;
     PresidentialPardonForm operator=(const PresidentialPardonForm &op);
-    class Signed : std::exception
+    class Signed : public std::exception
     {
         private:
             std::string val;

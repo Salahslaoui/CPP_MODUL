@@ -18,7 +18,12 @@ AForm *PresidentialPardonForms(std::string target)
     return (new PresidentialPardonForm(target));
 }
 
-AForm   *Intern::makeform(std::string name, std::string target)
+const char *Intern::Error::what() const throw()
+{
+	return ("this form doesn't exist!!");
+}
+
+AForm   *Intern::makeForm(std::string name, std::string target)
 {
     AForm* (*ptr[3]) (std::string target) = {&ShrubberyCreationForms, &RobotomyRequestForms, &PresidentialPardonForms};
     std::string names[3] = {"shrubbery creation", "robotomy request", "presidential pardon"};
@@ -26,12 +31,11 @@ AForm   *Intern::makeform(std::string name, std::string target)
     {
         if (name == names[i])
         {
-            std::cout << name << " executed " << target << std::endl;
+            std::cout << "intern" << " created " << name << std::endl;
             return ((*ptr[i])(target));
         }
     }
-    std::cerr << "this form doesn't exist!!" << std::endl;
-    return (NULL);
+    throw Error();
 }
 
 Intern::~Intern()

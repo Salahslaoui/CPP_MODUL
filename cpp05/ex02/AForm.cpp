@@ -1,8 +1,5 @@
 #include "AForm.hpp"
 
-AForm::AForm() : name("Name"), si(false), grade_si(150), grade_ex(150)
-{}
-
 AForm::AForm(std::string str, int si, int ex) : name(str), si(false), grade_si(si), grade_ex(ex)
 {
     if (si > 150 || ex > 150)
@@ -32,7 +29,7 @@ std::ostream &operator<<(std::ostream &os, AForm &F)
     return os;
 }
 
-std::string AForm::getName()
+std::string AForm::getName() const
 {
     return name;
 }
@@ -67,4 +64,7 @@ AForm::GradeTooHighException::~GradeTooHighException() throw()
 {}
 
 AForm::GradeTooLowException::~GradeTooLowException() throw()
+{}
+
+AForm::~AForm()
 {}

@@ -22,7 +22,7 @@ class ShrubberyCreationForm : public AForm
                 const char *what() const throw();
                 ~Signed() throw();
         };
-        ShrubberyCreationForm operator=(const ShrubberyCreationForm &op);
+        ShrubberyCreationForm &operator=(const ShrubberyCreationForm &op);
         ~ShrubberyCreationForm();
 };
 

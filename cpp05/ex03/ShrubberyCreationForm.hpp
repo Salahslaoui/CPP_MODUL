@@ -13,7 +13,7 @@ class ShrubberyCreationForm : public AForm
         ShrubberyCreationForm(std::string str);
         ShrubberyCreationForm(const ShrubberyCreationForm &copy);
         void execute(Bureaucrat const & executor) const;
-        class Signed : std::exception
+        class Signed : public std::exception
         {
             private:
                 std::string val;

@@ -1,16 +1,24 @@
 #include "Form.hpp"
 
-int main()
+int main() 
 {
-    Bureaucrat a("slaoui", 4);
-    Form b("document", 151, 3);
-    
-    try
-    {
-        a.signForm(b);
+    try {
+        Bureaucrat alice("Alice", 15);
+        Bureaucrat bob("Bob", 50);
+
+        Form contract("Contract", 20, 10);
+
+        std::cout << alice << std::endl;
+        std::cout << bob << std::endl;
+        std::cout << contract << std::endl;
+
+        alice.signForm(contract);
+        bob.signForm(contract);
+
+        std::cout << contract << std::endl;
     }
-    catch(const Form::GradeTooLowException& e)
-    {
-        std::cerr << a.getName() << " Bureaucrat couldn't sign " << b.getName() << " because " << e.what() << std::endl;
+    catch (const std::exception &e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
     }
+    return 0;
 }

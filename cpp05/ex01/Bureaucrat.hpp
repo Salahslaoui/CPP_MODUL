@@ -19,7 +19,7 @@ class Bureaucrat
     void incr();
     void decr();
     void signForm(Form &sign);
-    class GradeTooLowException : std::exception
+    class GradeTooLowException : public std::exception
     {
         private:
         std::string val;
@@ -28,7 +28,7 @@ class Bureaucrat
         const char *what() const throw();
         ~GradeTooLowException() throw() {};
     };
-    class GradeTooHighException : std::exception
+    class GradeTooHighException : public std::exception
     {
         private:
         std::string val;

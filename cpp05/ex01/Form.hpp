@@ -13,11 +13,11 @@ class Form
         const int grade_si;
         const int grade_ex;
     public:
-        Form();
         Form(std::string str, int si, int ex);
         std::string getName();
         int getGrade_si();
         int getGrade_ex();
+		bool getSigned();
         void beSigned(Bureaucrat br);
         class GradeTooHighException : public std::exception
         {

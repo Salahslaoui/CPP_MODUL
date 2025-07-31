@@ -10,7 +10,11 @@ class Intern
 {
     public:
         Intern();
-        AForm   *makeform(std::string name, std::string target);
+        AForm   *makeForm(std::string name, std::string target);
+		class Error : public std::exception
+		{
+			const char *what() const throw();
+		};
         ~Intern();
 };
 

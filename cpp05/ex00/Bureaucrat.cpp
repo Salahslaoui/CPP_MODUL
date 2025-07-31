@@ -60,5 +60,11 @@ Bureaucrat::Bureaucrat(std::string str, int i) : name(str)
     grade = i;
 }
 
+Bureaucrat::GradeTooLowException::~GradeTooLowException() throw()
+{}
+
+Bureaucrat::GradeTooHighException::~GradeTooHighException() throw()
+{}
+
 Bureaucrat::~Bureaucrat()
 {}

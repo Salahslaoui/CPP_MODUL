@@ -2,10 +2,10 @@
 #include <cstdlib>
 #include <ctime>
 
-RobotomyRequestForm::RobotomyRequestForm() : AForm("target", 72, 45), target("target")
+RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm", 72, 45), target("target")
 {}
 
-RobotomyRequestForm::RobotomyRequestForm(std::string str) : AForm("target", 72, 45), target(str)
+RobotomyRequestForm::RobotomyRequestForm(std::string str) : AForm("RobotomyRequestForm", 72, 45), target(str)
 {}
 
 RobotomyRequestForm::Signed::Signed(std::string str) : val(str)
@@ -23,7 +23,8 @@ void RobotomyRequestForm::execute(Bureaucrat const & executor) const
     if (executor.getGrade() > getGrade_ex())
         throw GradeTooLowException("Grade too low!!");
     std::cout << "making some drilling noises!" << std::endl;
-    srand(time(0));
+	static int counter = 0;
+    srand(time(0) + counter++);
     if (rand() % 2 == 0)
         std::cout << target << "has been robotomized" << std::endl;
     else
@@ -35,7 +36,7 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &copy) : AFor
     (*this) = copy;
 }
 
-RobotomyRequestForm RobotomyRequestForm::operator=(const RobotomyRequestForm &op)
+RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &op)
 {
     if (this != &op)
         (*this).target = op.target;

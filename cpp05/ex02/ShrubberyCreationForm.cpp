@@ -1,9 +1,9 @@
 #include "ShrubberyCreationForm.hpp"
 
-ShrubberyCreationForm::ShrubberyCreationForm() : AForm("target", 145, 137), target("target")
+ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm", 145, 137), target("target")
 {}
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string str) : AForm(str, 145, 137), target(str)
+ShrubberyCreationForm::ShrubberyCreationForm(std::string str) : AForm("ShrubberyCreationForm", 145, 137), target(str)
 {}
 
 ShrubberyCreationForm::Signed::Signed(std::string str) : val(str)
@@ -27,7 +27,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
     if (!outfile)
     {
         std::cout << "error in opening file !";
-        return ;
+        throw std::runtime_error("Failed to create file: " + target + "_shrubbery");
     }
     outfile << "       _-_\n";
     outfile << "    /~~   ~~\\\n";
@@ -46,7 +46,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &copy) 
     *this = copy;
 }
 
-ShrubberyCreationForm ShrubberyCreationForm::operator=(const ShrubberyCreationForm &op)
+ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationForm &op)
 {
     if (this != &op)
         (*this).target = op.target;

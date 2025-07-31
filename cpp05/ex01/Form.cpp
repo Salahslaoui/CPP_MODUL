@@ -1,8 +1,5 @@
 #include "Form.hpp"
 
-Form::Form() : name("Name"), si(false), grade_si(150), grade_ex(150)
-{}
-
 Form::Form(std::string str, int si, int ex) : name(str), si(false), grade_si(si), grade_ex(ex)
 {
     if (si > 150 || ex > 150)
@@ -19,11 +16,20 @@ void Form::beSigned(Bureaucrat br)
         si = true;
 }
 
+bool Form::getSigned()
+{
+	return si;
+}
+
 std::ostream &operator<<(std::ostream &os, Form F)
 {
     os << "the name is : " << F.getName() << std::endl;
     os << "the signed grade is : " << F.getGrade_si() << std::endl;
     os << "the execution grade is : " << F.getGrade_ex() << std::endl;
+	if (F.getSigned())
+		os << "the Form is signed!" << std::endl;
+	else
+		os << "the Form isn't signed!" << std::endl;
     return os;
 }
 

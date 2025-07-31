@@ -13,15 +13,14 @@ class AForm
         const int grade_si;
         const int grade_ex;
     public:
-        AForm();
         AForm(std::string str, int si, int ex);
-        std::string getName();
+        std::string getName() const;
         int getGrade_si();
         int getGrade_ex() const;
         bool getSi() const;
         void beSigned(Bureaucrat br);
         virtual void execute(Bureaucrat const & executor) const = 0;
-        class GradeTooHighException : std::exception
+        class GradeTooHighException : public std::exception
         {
             private:
                 std::string val;
@@ -30,7 +29,7 @@ class AForm
                 const char *what() const throw();
                 ~GradeTooHighException() throw();
         };
-        class GradeTooLowException : std::exception
+        class GradeTooLowException : public std::exception
         {
             private:
                 std::string val;
@@ -39,8 +38,9 @@ class AForm
                 const char *what() const throw();
                 ~GradeTooLowException() throw();
         };
+		virtual ~AForm();
 };
 
-std::ostream &operator<<(std::ostream &os, AForm F);
+std::ostream &operator<<(std::ostream &os, AForm &F);
 
 #endif

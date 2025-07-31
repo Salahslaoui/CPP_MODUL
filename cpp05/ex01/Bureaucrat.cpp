@@ -48,8 +48,15 @@ void Bureaucrat::decr()
 
 void    Bureaucrat::signForm(Form &sign)
 {
-    sign.beSigned(*this);
-    std::cout << this->name << " signed " << sign.getName() << std::endl; 
+	try
+	{
+    	sign.beSigned(*this);
+    	std::cout << this->name << " signed " << sign.getName() << std::endl; 
+	}
+	catch(const std::exception &e)
+	{
+		std::cout << (*this).name << " couldn’t sign " << sign.getName() << " because " << e.what() << std::endl;
+	}
 }
 
 std::ostream &operator<<(std::ostream& os, Bureaucrat& bu)

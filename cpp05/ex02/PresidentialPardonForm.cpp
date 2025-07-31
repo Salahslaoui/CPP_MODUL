@@ -1,9 +1,9 @@
 #include "PresidentialPardonForm.hpp"
 
-PresidentialPardonForm::PresidentialPardonForm() : AForm("target", 25, 5), target("target")
+PresidentialPardonForm::PresidentialPardonForm() : AForm("PresidentialPardonForm", 25, 5), target("target")
 {}
 
-PresidentialPardonForm::PresidentialPardonForm(std::string str) : AForm(str, 25, 5), target(str)
+PresidentialPardonForm::PresidentialPardonForm(std::string str) : AForm("PresidentialPardonForm", 25, 5), target(str)
 {}
 
 PresidentialPardonForm::Signed::Signed(std::string str) : val(str)
@@ -28,7 +28,7 @@ PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &cop
     (*this) = copy;
 }
 
-PresidentialPardonForm PresidentialPardonForm::operator=(const PresidentialPardonForm &op)
+PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &op)
 {
     if (this != &op)
         (*this).target = op.target;
