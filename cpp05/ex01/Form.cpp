@@ -21,6 +21,18 @@ bool Form::getSigned()
 	return si;
 }
 
+Form::Form(const Form &copy) : name(copy.name), grade_si(copy.grade_si), grade_ex(copy.grade_ex)
+{
+    this->si = copy.si;
+}
+
+Form &Form::operator=(const Form &op)
+{
+    if (this != &op)
+        (*this) = op;
+    return (*this);
+}
+
 std::ostream &operator<<(std::ostream &os, Form F)
 {
     os << "the name is : " << F.getName() << std::endl;
@@ -70,4 +82,5 @@ Form::GradeTooHighException::~GradeTooHighException() throw()
 Form::GradeTooLowException::~GradeTooLowException() throw()
 {}
 
-
+Form::~Form()
+{}

@@ -14,6 +14,8 @@ class AForm
         const int grade_ex;
     public:
         AForm(std::string str, int si, int ex);
+        AForm(const AForm &copy);
+        AForm &operator=(const AForm &op);
         std::string getName() const;
         int getGrade_si();
         int getGrade_ex() const;

@@ -15,6 +15,18 @@ std::string Bureaucrat::getName()
     return (name);
 }
 
+Bureaucrat::Bureaucrat(const Bureaucrat &copy) : name(copy.name)
+{
+    this->grade = copy.grade;
+}
+
+Bureaucrat &Bureaucrat::operator=(const Bureaucrat &op)
+{
+    if (this != &op)
+        (*this) = op;
+    return (*this);
+}
+
 Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string& str) : val(str)
 {}
 

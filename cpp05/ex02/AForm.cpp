@@ -8,6 +8,18 @@ AForm::AForm(std::string str, int si, int ex) : name(str), si(false), grade_si(s
         throw GradeTooHighException("Grade too high!!");
 }
 
+AForm::AForm(const AForm &copy) : name(copy.name), grade_si(copy.grade_si), grade_ex(copy.grade_ex)
+{
+    this->si = copy.si;
+}
+
+AForm &AForm::operator=(const AForm &op)
+{
+    if (this != &op)
+        (*this) = op;
+    return (*this);
+}
+
 bool AForm::getSi() const
 {
     return si;

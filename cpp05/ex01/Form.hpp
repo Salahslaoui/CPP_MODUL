@@ -14,6 +14,9 @@ class Form
         const int grade_ex;
     public:
         Form(std::string str, int si, int ex);
+        Form(const Form &copy);
+        Form &operator=(const Form &op);
+        ~Form();
         std::string getName();
         int getGrade_si();
         int getGrade_ex();

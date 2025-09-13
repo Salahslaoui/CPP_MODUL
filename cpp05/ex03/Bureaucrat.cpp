@@ -52,6 +52,18 @@ void    Bureaucrat::signForm(AForm &sign)
     std::cout << this->name << " signed " << sign.getName() << std::endl;
 }
 
+Bureaucrat::Bureaucrat(const Bureaucrat &copy) : name(copy.name)
+{
+    this->grade = copy.grade;
+}
+
+Bureaucrat &Bureaucrat::operator=(const Bureaucrat &op)
+{
+    if (this != &op)
+        (*this) = op;
+    return (*this);
+}
+
 std::ostream &operator<<(std::ostream& os, Bureaucrat& bu)
 {
     os << bu.getName() << ", bureaucrat grade " << bu.getGrade() << "." << std::endl;
