@@ -3,6 +3,18 @@
 Intern::Intern()
 {}
 
+Intern::Intern(const Intern &copy)
+{
+    (void)copy;
+}
+
+Intern &Intern::operator=(const Intern &op)
+{
+    if (this != &op)
+        (*this) = op;
+    return (*this);
+}
+
 AForm *ShrubberyCreationForms(std::string target)
 {
     return (new ShrubberyCreationForm(target));

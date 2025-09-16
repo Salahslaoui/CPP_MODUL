@@ -20,7 +20,7 @@ class Bureaucrat
                 std::string val;
             public:
                 GradeTooLowException(const std::string& str);
-            const char *what() const throw();
+                const char *what() const throw();
                 ~GradeTooLowException() throw();
         };
         class GradeTooHighException : public std::exception
