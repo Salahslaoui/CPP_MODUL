@@ -3,9 +3,10 @@
 
 int main()
 {
-    int *p;
-    int *q;
-    int a;
+	int i = 5;
+    int *p = &i;
+    int *q = NULL;
+
     size_t s = 0;
     s = Serializer::serialize(p);
     std::cout << p << std::endl;

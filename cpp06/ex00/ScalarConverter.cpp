@@ -67,7 +67,7 @@ void ScalarConverter::convert(std::string input)
 	char c;
 	char *end = NULL;
 	long l;
-	int i = 0;
+
 	if (str == "CHAR")
 	{
 		if(isprint(input[0]))
