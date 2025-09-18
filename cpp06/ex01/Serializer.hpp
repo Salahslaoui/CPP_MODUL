@@ -2,7 +2,6 @@
 #define SERIALIZER_HPP
 
 #include <iostream>
-#include <cstdint>
 
 class Serializer
 {
@@ -11,8 +10,8 @@ class Serializer
 		Serializer(const Serializer &copy);
 		Serializer &operator=(const Serializer &op);
 	public:
-		static	uintptr_t  serialize(Data* ptr);
-		static Data* deserialize(uintptr_t raw);
-}
+		static	size_t serialize(void* ptr);
+		static void* deserialize(size_t raw);
+};
 
 #endif
