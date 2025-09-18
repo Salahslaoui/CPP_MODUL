@@ -3,14 +3,17 @@
 
 int main()
 {
-	int i = 5;
-    int *p = &i;
-    int *q = NULL;
-
+	Data a = {4, 767, 12.4};
+	Data *b = &a;
+	Data *c = NULL;
     size_t s = 0;
-    s = Serializer::serialize(p);
-    std::cout << p << std::endl;
+
+	std::cout << "Short: " << b->x << std::endl;
+	std::cout << "INT: " << b->y << std::endl;
+	std::cout << "DOUBLE: " << b->z << std::endl;
+	std::cout << &a << std::endl;
+    s = Serializer::serialize(b);
     std::cout << s << std::endl;
-    q = (int *)Serializer::deserialize(s);
-    std::cout << q << std::endl;
+    c = Serializer::deserialize(s);
+    std::cout << b << std::endl;
 }

@@ -57,22 +57,6 @@ void identify(Base& p)
     }
     catch (std::exception &)
     {}
-    // if (dynamic_cast<A*>(&p))
-    // {
-    //     std::cout << "referencing to to A" << std::endl;
-    //     return;
-    // }
-    // else if (dynamic_cast<B*>(&p))
-    // {
-    //     std::cout << "referencing to to B" << std::endl;
-    //     return;
-    // }
-    // else if (dynamic_cast<C*>(&p))
-    // {
-    //     std::cout << "referencing to to C" << std::endl;
-    //     return;
-    // }
-    // std::cout << "Reference not match" << std::endl;
 }
 
 int main()
@@ -81,4 +65,5 @@ int main()
     Base *p = generate();
     identify(p);
     identify(*p);
+	delete p;
 }

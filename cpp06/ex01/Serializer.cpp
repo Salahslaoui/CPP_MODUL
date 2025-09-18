@@ -14,14 +14,17 @@ Serializer &Serializer::operator=(const Serializer &op)
 	return (*this);
 }
 
-size_t  Serializer::serialize(void* ptr)
+size_t  Serializer::serialize(Data* ptr)
 {
 	size_t i = reinterpret_cast<size_t>(ptr);
 	return i;
 }
 
-void* Serializer::deserialize(size_t raw)
+Data* Serializer::deserialize(size_t raw)
 {
-	void *p = reinterpret_cast<void *>(raw);
+	Data *p = reinterpret_cast<Data *>(raw);
 	return p;
 }
+
+Serializer::~Serializer()
+{}
