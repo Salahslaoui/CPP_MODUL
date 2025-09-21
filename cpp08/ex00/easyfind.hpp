@@ -3,17 +3,15 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 template <typename T>
 int easyfind(T a, int b)
 {
-    for(size_t i = 0; i < a.size(); ++i)
-    {
-        if (a[i] == b)
-            return i;
-
-    }
-    throw std::runtime_error("no occurence found!!");
+    typename T::iterator it = std::find(a.begin(), a.end(), b);
+    if (it == a.end())
+        throw std::runtime_error("no occurrence found!!");
+    return std::distance(a.begin(), it);
 }
 
 
