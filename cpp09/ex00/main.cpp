@@ -13,7 +13,7 @@ std::map<std::string, double> get_map(std::ifstream &file)
         std::stringstream tmp(line);
         if (std::getline(tmp, date, ',') && std::getline(tmp, price_str))
         {
-            double price = std::stod(price_str);
+            double price = std::atof(price_str.c_str());
             B[date] = price;
         }
     }
@@ -44,7 +44,7 @@ bool is_valid(std::string date)
 void check_date(std::string date, std::string price_str)
 {
     int k = 0;
-    for (int i = 0; i < date.size(); ++i)
+    for (size_t i = 0; i < date.size(); ++i)
     {
         if (i == 10 && date[i] == ' ')
             continue;
@@ -53,7 +53,7 @@ void check_date(std::string date, std::string price_str)
         else if (!isdigit(date[i]))
             throw std::runtime_error("the date is invalid numbers only!!!");
     }
-    for (int i = 0; i < price_str.size(); ++i)
+    for (size_t i = 0; i < price_str.size(); ++i)
     {
         if (price_str[i] == ' ')
             continue;
@@ -102,7 +102,7 @@ std::map<std::string, double> parse_input(std::ifstream &file, std::map<std::str
         try
         {
             check_date(date, price_str);
-            double price = std::stod(price_str);
+            double price = std::atof(price_str.c_str());
             if (price > 2147483647)
                 throw std::runtime_error("too large a number.");
             if (price < 0)

@@ -5,13 +5,14 @@ void check_number(char *num, std::stack<int> &Stack)
     int tmp;
     int tmp1;
 
-    std::cout << "ss " << num << std::endl;
     for(int i = 0; num[i]; ++i)
     {
-        if (num[i] == ' ')
+        if (num[i] == ' ' || num[i] == '\t')
             continue;
         if (!isdigit(num[i]) && num[i] != '+' && num[i] != '-' && num[i] != '*' && num[i] != '/')
             throw std::runtime_error("the argument is not a number or a operation");
+        if (num[i + 1] && isdigit(num[i]) && isdigit(num[i + 1]))
+            throw std::runtime_error("the argument is a number larger than 9");
         if (isdigit(num[i]))
         {
             Stack.push(num[i] - 48);
@@ -21,10 +22,16 @@ void check_number(char *num, std::stack<int> &Stack)
         {
             if (Stack.size() < 2)
                 throw std::runtime_error("there must at least 2 to number to make an opration!!");
-            tmp = Stack.top();
-            Stack.pop();
-            tmp1 = Stack.top();
-            Stack.pop();
+            if (Stack.size() > 0)
+            {
+                tmp = Stack.top();
+                Stack.pop();
+            }
+            if (Stack.size() > 0)
+            {
+                tmp1 = Stack.top();
+                Stack.pop();
+            }
             if (num[i] == '+')
                 Stack.push(tmp1 + tmp);
             else if (num[i] == '-')
@@ -56,6 +63,7 @@ int main(int ac, char **av)
             std::cout << S.top() << " ";
             S.pop();
         }
+        std::cout << std::endl;
     }
     catch(std::exception &e)
     {

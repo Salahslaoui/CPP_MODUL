@@ -35,113 +35,87 @@ std::vector<size_t> generate(size_t len)
 {
     std::vector<size_t> seq;
     size_t i = 2;
-    int j;
+    size_t current = 0;
+    size_t previous = 1;
+    size_t j = Jacobsthal(i);
 
-    while (i < len)
+    while (j < len)
     {
-        if ((j = Jacobsthal(i)) >= len)
-        {
-            seq.push_back(len);
-            break;
-        }
-        else
-            seq.push_back(j);
+        current = j;
+        seq.push_back(j);
+        while (previous < --current)
+            seq.push_back(current);
+        previous = j;
         i++;
+        j = Jacobsthal(i);
     }
+    if (j  >= len)
+        seq.push_back(len);
+    for (size_t k = len-1; k > previous; k--)
+        seq.push_back(k);
     return seq;
 }
 
 void fill_save(std::vector<std::vector<int> > &tmp, std::vector<std::vector<int> > &save)
 {
     std::vector<size_t> seq = generate(save.size());
-    size_t current;
-    size_t next;
-    size_t pads = 0;
-    for (size_t i = 0; i < save.size(); ++i)
-    {
-        // if (i == 0)
-        // {
-        //     tmp.push_back(save[i]);
-        //     continue;
-        // }
-        std::vector<std::vector<int> >::iterator pos = std::lower_bound(tmp.begin(), tmp.begin() + pads + i, save[i], compareFront);
-        tmp.insert(pos, save[i]);
-        pads++;
-    };
-    for (size_t i = 0; i < tmp.size(); ++i)
-    {
-        std::cout << "Pairsss " << i + 1 << " " << tmp[i].size() << " " << ": ";
-        for (int j = 0; j < tmp[i].size(); ++j)
-            std::cout << tmp[i][j] << " ";
-        std::cout << "\n";
-    }
-}
+    size_t pads = 1;
 
-void fill_left(std::vector<std::vector<int> > &tmp, std::vector<std::vector<int> > &save)
-{
-    for (size_t i = 0; i < save.size(); ++i)
+    tmp.insert(tmp.begin(), save.begin(), save.begin() + 1);
+    if (save.size() > 1)
     {
-        std::vector<std::vector<int> >::iterator pos = std::lower_bound(tmp.begin(), tmp.end(), save[i], compareFront);
-        tmp.insert(pos, save[i]);
-    };
-}
-
-void    merge_container(std::vector<std::vector<int> > &tmp, std::vector<std::vector<int> > &leftover)
-{
-    size_t pair_size = 0;
-    std::vector<std::vector<int> > save;
-    std::vector<int> left;
-    std::vector<int> p;
-
-    for (size_t j = 0; j < tmp.size(); ++j)
-    {
-        if (j + 1 < tmp.size())
+        for (size_t i = 1; i < seq.size(); ++i)
         {
-            if (tmp[j].front() > tmp[j + 1].front())
-            {
-                tmp[j].insert(tmp[j].end(), tmp[j + 1].begin(), tmp[j + 1].end());
-                tmp.erase(tmp.begin() + j + 1);
-            }
-            else
-            {
-                tmp[j + 1].insert(tmp[j + 1].end(), tmp[j].begin(), tmp[j].end());
-                tmp.erase(tmp.begin() + j);
-            }
-            comp++;
+            std::vector<std::vector<int> >::iterator pos = std::lower_bound(tmp.begin(), tmp.begin() + pads + seq[i] - 1, save[seq[i] - 1], compareFront);
+            tmp.insert(pos, save[seq[i] - 1]);
+            pads++;
         }
     }
-    if (tmp.size() > 1)
-        merge_container(tmp, leftover);
+}
+
+void    merge_container(std::vector<std::vector<int> > &tmp)
+{
+    std::vector<std::vector<int> > save;
+    std::vector<int> left;
+    int hasleft = 0;
+
+    if ((hasleft = tmp.size() % 2))
+    {
+        left.insert(left.end(), tmp.back().begin(), tmp.back().end());
+        tmp.erase(tmp.end() - 1);
+    }
     for (size_t j = 0; j < tmp.size(); ++j)
     {
-        pair_size = tmp[j].size() / 2;
+        if (tmp[j].front() > tmp[j + 1].front())
+        {
+            tmp[j].insert(tmp[j].end(), tmp[j + 1].begin(), tmp[j + 1].end());
+            tmp.erase(tmp.begin() + j + 1);
+        }
+        else
+        {
+            tmp[j + 1].insert(tmp[j + 1].end(), tmp[j].begin(), tmp[j].end());
+            tmp.erase(tmp.begin() + j);
+        }
+        comp++;
+    }
+    if (tmp.size() > 1)
+        merge_container(tmp);
+    size_t pair_size = tmp[0].size() / 2;
+    for (size_t j = 0; j < tmp.size(); ++j)
+    {
         std::vector<int> split(tmp[j].begin() + pair_size, tmp[j].end());
-        for (size_t i = 0; i < left.size(); ++i)
-            split.push_back(left[i]);
         tmp[j].erase(tmp[j].begin() + pair_size, tmp[j].end());
         save.push_back(split);
     }
-    // save.insert(save.end(), left.begin(), left.end());
-    // for (size_t i = 0; i < save.size(); ++i)
-    // {
-    //     std::cout << "Pairsss " << i + 1 << " " << save[i].size() << " " << ": ";
-    //     for (int j = 0; j < save[i].size(); ++j)
-    //         std::cout << save[i][j] << " ";
-    //     std::cout << "\n";
-    // }
+    if (hasleft)
+        save.push_back(left);
     fill_save(tmp, save);
-    // fill_left(tmp, left);
 }
 
 std::vector<std::vector<int> > pair_merge(char **av)
 {
-    std::vector<std::vector<int> > leftover;
     std::vector<std::vector<int> > tmp;
     std::vector<int> p;
-    size_t pair_size = 0;
-    size_t save;
-    int a;
-    int b;
 
     for (size_t i = 1; av[i]; i += 1) 
     {
@@ -152,15 +126,7 @@ std::vector<std::vector<int> > pair_merge(char **av)
         tmp.push_back(p);
         p.erase(p.begin(), p.end());
     }
-    save = tmp.size();
-    merge_container(tmp, leftover);
-    for (size_t i = 0; i < tmp.size(); ++i)
-    {
-        std::cout << "Pair " << i + 1 << " " << tmp[i].size() << " " << ": ";
-        for (int j = 0; j < tmp[i].size(); ++j)
-            std::cout << tmp[i][j] << " ";
-        std::cout << "\n";
-    }
+    merge_container(tmp);
     return tmp;
 }
 
@@ -168,11 +134,24 @@ std::vector<std::vector<int> > pair_merge(char **av)
 int main(int ac, char **av)
 {
     std::vector<std::vector<int> > result;
+    std::deque<std::deque<int> > list;
     PmergeMe Pmer;
+    std::vector<size_t> seq;
 
     if (ac < 2)
         return (std::cerr << "Must be at least 2 arguments!" << std::endl, 1);
     Pmer.setter(pair_merge(av));
     result = Pmer.getter();
+    list = Pmer.pair_merge(av);
+    std::cout << "     _________       " << std::endl;
+    for (size_t i = 0; i < list.size(); ++i)
+    {
+        std::cout << "deque " << i + 1 << " " << list[i].size() << " " << ": ";
+        for (size_t j = 0; j < list[i].size(); ++j)
+            std::cout << list[i][j] << " ";
+        std::cout << "\n";
+    }
     std::cout << "comparaison number: " << comp << std::endl;
+    std::cout << "comparaison number deque: " << Pmer.setter_nb() << std::endl;
+    std::cout << std::endl;
 }
