@@ -127,6 +127,7 @@ std::vector<std::vector<int> > pair_merge(char **av)
         p.erase(p.begin(), p.end());
     }
     merge_container(tmp);
+	std::cout << "After: ";
     return tmp;
 }
 
@@ -137,21 +138,33 @@ int main(int ac, char **av)
     std::deque<std::deque<int> > list;
     PmergeMe Pmer;
     std::vector<size_t> seq;
-
-    if (ac < 2)
-        return (std::cerr << "Must be at least 2 arguments!" << std::endl, 1);
-    Pmer.setter(pair_merge(av));
-    result = Pmer.getter();
-    list = Pmer.pair_merge(av);
-    std::cout << "     _________       " << std::endl;
-    for (size_t i = 0; i < list.size(); ++i)
-    {
-        std::cout << "deque " << i + 1 << " " << list[i].size() << " " << ": ";
-        for (size_t j = 0; j < list[i].size(); ++j)
-            std::cout << list[i][j] << " ";
-        std::cout << "\n";
-    }
-    std::cout << "comparaison number: " << comp << std::endl;
-    std::cout << "comparaison number deque: " << Pmer.setter_nb() << std::endl;
-    std::cout << std::endl;
+	clock_t times[4];
+	try
+	{
+		if (ac < 2)
+			return (std::cerr << "Must be at least 2 arguments!" << std::endl, 1);
+		std::cout << "Before ";
+		for (size_t i = 1; av[i]; ++i)
+			std::cout << av[i] << " ";
+		std::cout << std::endl;
+		times[0] = clock();
+		Pmer.setter(pair_merge(av));
+		times[1] = clock();
+		for (size_t i = 0; i < Pmer.getter().size(); ++i)
+		{
+			for (size_t j = 0; j < Pmer.getter()[i].size(); ++j)
+				std::cout << Pmer.getter()[i][j] << " ";
+		}
+		std::cout << std::endl;
+		result = Pmer.getter();
+		times[2] = clock();
+		list = Pmer.pair_merge(av);
+		times[3] = clock();
+		std::cout << "Time to process a range of " << ac - 1 << "  elements with std::[vector] : " << (double) ((times[1] - times[0])) / CLOCKS_PER_SEC * 1e6 << "us \n";
+		std::cout << "Time to process a range of " << ac - 1 << "  elements with std::[deque] : " << (double) ((times[3] - times[2])) / CLOCKS_PER_SEC * 1e6 << "us \n";
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "Error" << std::endl;
+	}
 }

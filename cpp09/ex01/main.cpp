@@ -5,14 +5,14 @@ void check_number(char *num, std::stack<int> &Stack)
     int tmp;
     int tmp1;
 
-    for(int i = 0; num[i]; ++i)
+    for(size_t i = 0; num[i]; ++i)
     {
         if (num[i] == ' ' || num[i] == '\t')
             continue;
         if (!isdigit(num[i]) && num[i] != '+' && num[i] != '-' && num[i] != '*' && num[i] != '/')
-            throw std::runtime_error("the argument is not a number or a operation");
+            throw std::runtime_error("Error");
         if (num[i + 1] && isdigit(num[i]) && isdigit(num[i + 1]))
-            throw std::runtime_error("the argument is a number larger than 9");
+            throw std::runtime_error("Error");
         if (isdigit(num[i]))
         {
             Stack.push(num[i] - 48);
@@ -21,7 +21,7 @@ void check_number(char *num, std::stack<int> &Stack)
         if (num[i] == '-' || num[i] == '+' || num[i] == '*' || num[i] == '/')
         {
             if (Stack.size() < 2)
-                throw std::runtime_error("there must at least 2 to number to make an opration!!");
+                throw std::runtime_error("Error");
             if (Stack.size() > 0)
             {
                 tmp = Stack.top();
@@ -67,6 +67,6 @@ int main(int ac, char **av)
     }
     catch(std::exception &e)
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
 }
